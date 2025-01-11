@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Orchid\Tests\Unit;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Session\Store;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\CheckBox;
 use Orchid\Screen\Fields\Code;
@@ -113,13 +113,11 @@ class FieldTest extends TestUnitCase
     }
 
     /**
-     * @param mixed $options
-     *
      * @dataProvider exampleFields
      *
      * @throws \Throwable
      */
-    public function testHasCorrectInstance(string $field, $options): void
+    public function testHasCorrectInstance(string $field, mixed $options): void
     {
         /** @var \Orchid\Screen\Field $field */
         $field = $field::make();
@@ -138,25 +136,25 @@ class FieldTest extends TestUnitCase
     {
         $collect = collect(range(0, 10000));
 
-        $fields = $collect->map(fn ($value) => (new Field())->set('value', $value)->getId())->unique();
+        $fields = $collect->map(fn ($value) => (new Field)->set('value', $value)->getId())->unique();
 
         $this->assertEquals($fields->count(), $collect->count());
 
-        $expected = (new Field())->set('value', 'test')->getId();
-        $actual = (new Field())->set('value', 'test')->getId();
+        $expected = (new Field)->set('value', 'test')->getId();
+        $actual = (new Field)->set('value', 'test')->getId();
 
         $this->assertEquals($expected, $actual);
     }
 
     public function testOldNameMatchesLaravelRequestOldPrefix()
     {
-        $field = new Field();
+        $field = new Field;
 
         $field->set('name', 'parent[child][grandchild]');
 
         $this->assertEquals('parent.child.grandchild', $field->getOldName());
 
-        $field = new Field();
+        $field = new Field;
 
         $field->set('name', 'parent[child][grandchild][]');
 
@@ -165,7 +163,7 @@ class FieldTest extends TestUnitCase
 
     public function testOldNameMatchesLaravelRequestOldPrefixWithErrors()
     {
-        $field = new Input();
+        $field = new Input;
         $field->set('name', 'parent[child][grandchild]');
 
         $view = $field->render();
@@ -178,7 +176,7 @@ class FieldTest extends TestUnitCase
         $this->assertStringContainsString('testError', $html);
         $this->assertStringContainsString('parent[child][grandchild]', $html);
 
-        $field = new Input();
+        $field = new Input;
         $field->set('name', 'parent[child][grandchild][]');
 
         $view = $field->render();
@@ -194,27 +192,69 @@ class FieldTest extends TestUnitCase
 
     public function testOldName(): void
     {
-        Session::start();
+        $session = tap(app()->make(Store::class), function ($session) {
+            $session->start();
+            $session->put('_old_input', [
+                'name' => "The heart of Seoul's nightlife",
+            ]);
+        });
 
-        Session::put('_old_input', [
-            'name' => "The heart of Seoul's nightlife",
-        ]);
-
-        request()->setLaravelSession(session());
+        request()->setLaravelSession($session);
 
         $this->assertSame("The heart of Seoul's nightlife", Input::make('name')->getOldValue());
     }
 
     public function testNumericOldName(): void
     {
-        Session::start();
+        $session = tap(app()->make(Store::class), function ($session) {
+            $session->start();
+            $session->put('_old_input', [
+                'numeric' => '3.141',
+            ]);
+        });
 
-        Session::put('_old_input', [
-            'numeric' => '3.141',
-        ]);
-
-        request()->setLaravelSession(session());
+        request()->setLaravelSession($session);
 
         $this->assertSame('3.141', Input::make('numeric')->getOldValue());
+    }
+
+    public function testAddsSingleClassToEmptyClassAttribute(): void
+    {
+        $field = Field::make('test');
+        $field->addClass('new-class');
+
+        $this->assertEquals('new-class', $field->get('class'));
+    }
+
+    public function testAddsMultipleClassesToEmptyClassAttribute(): void
+    {
+        $field = Field::make('test');
+        $field->addClass('class1 class2');
+
+        $this->assertEquals('class1 class2', $field->get('class'));
+    }
+
+    public function testAddsArrayOfClassesToEmptyClassAttribute(): void
+    {
+        $field = Field::make('test');
+        $field->addClass(['class1', 'class2']);
+
+        $this->assertEquals('class1 class2', $field->get('class'));
+    }
+
+    public function testAddsNewClassToExistingClasses(): void
+    {
+        $field = Field::make('test')->set('class', 'existing-class');
+        $field->addClass('new-class');
+
+        $this->assertEquals('existing-class new-class', $field->get('class'));
+    }
+
+    public function testDoesNotDuplicateClasses(): void
+    {
+        $field = Field::make('test')->set('class', 'existing-class');
+        $field->addClass('existing-class new-class');
+
+        $this->assertEquals('existing-class new-class', $field->get('class'));
     }
 }

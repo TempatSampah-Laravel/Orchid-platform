@@ -6,7 +6,6 @@ namespace Orchid\Tests\App\Screens;
 
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\ModalToggle;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Tests\App\Layouts\DependentSumListener;
@@ -61,16 +60,6 @@ class DependentListenerModalScreen extends Screen
     {
         return [
             Layout::modal('modal-listener', [
-                Layout::rows([
-                    Input::make('first')
-                        ->title('First argument')
-                        ->type('number'),
-
-                    Input::make('second')
-                        ->title('Second argument')
-                        ->type('number'),
-                ]),
-
                 DependentSumListener::class,
             ])->title('Listener in modal'),
         ];

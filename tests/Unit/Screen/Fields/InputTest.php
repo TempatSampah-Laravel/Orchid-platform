@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Orchid\Tests\Unit\Screen\Fields;
 
+use Illuminate\Foundation\Testing\Concerns\InteractsWithSession;
+use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\MessageBag;
 use Orchid\Screen\Fields\Input;
 use Orchid\Tests\Unit\Screen\TestFieldsUnitCase;
 use Throwable;
 
 class InputTest extends TestFieldsUnitCase
 {
+    use InteractsWithSession;
+
     /**
      * @throws Throwable
      */
@@ -121,13 +126,14 @@ class InputTest extends TestFieldsUnitCase
 
     public function testLongNumericValue(): void
     {
-        Session::start();
+        $session = tap(app()->make(Store::class), function ($session) {
+            $session->start();
+            $session->put('_old_input', [
+                'numeric' => '1234567890123456789012345678901234567890',
+            ]);
+        });
 
-        Session::put('_old_input', [
-            'numeric' => '1234567890123456789012345678901234567890',
-        ]);
-
-        request()->setLaravelSession(session());
+        request()->setLaravelSession($session);
 
         $input = Input::make('numeric')->getOldValue();
 
@@ -136,16 +142,41 @@ class InputTest extends TestFieldsUnitCase
 
     public function testMediumLongNumericValue(): void
     {
-        Session::start();
+        $session = tap(app()->make(Store::class), function ($session) {
+            $session->start();
+            $session->put('_old_input', [
+                'numeric' => '66666666666666666666',
+            ]);
+        });
 
-        Session::put('_old_input', [
-            'numeric' => '66666666666666666666',
-        ]);
-
-        request()->setLaravelSession(session());
+        request()->setLaravelSession($session);
 
         $input = Input::make('numeric')->getOldValue();
 
         $this->assertEquals('66666666666666666666', $input);
+    }
+
+    public function testOverwriteAttributes(): void
+    {
+        $input = Input::make()
+            ->set('title', 'John Doe')
+            ->set('title', null);
+
+        $this->assertNull($input->get('title'));
+    }
+
+    public function testValidationMessage(): void
+    {
+        $errors = new MessageBag(['name' => ['Name is required']]);
+
+        Session::put('errors', $errors);
+
+        $input = Input::make('name');
+
+        $this->assertStringContainsString(
+            'Name is required',
+            (string) $input,
+            'Expected validation error message was not found in the rendered input.'
+        );
     }
 }

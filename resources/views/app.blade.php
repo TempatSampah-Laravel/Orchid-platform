@@ -10,9 +10,9 @@
             - {{ config('app.name') }}
         @endif
     </title>
-    <meta name="csrf_token" content="{{  csrf_token() }}" id="csrf_token">
-    <meta name="auth" content="{{  Auth::check() }}" id="auth">
-    @if(\Orchid\Support\Locale::currentDir(app()->getLocale()) == "rtl")
+    <meta name="csrf_token" content="{{ csrf_token() }}" id="csrf_token">
+    <meta name="auth" content="{{ Auth::check() }}" id="auth">
+    @if(\Orchid\Support\Locale::isRtl())
         <link rel="stylesheet" type="text/css" href="{{  mix('/css/orchid.rtl.css','vendor/orchid') }}">
     @else
         <link rel="stylesheet" type="text/css" href="{{  mix('/css/orchid.css','vendor/orchid') }}">
@@ -24,6 +24,7 @@
     <meta name="turbo-root" content="{{  Dashboard::prefix() }}">
     <meta name="turbo-refresh-method" content="{{ config('platform.turbo.refresh-method', 'replace') }}">
     <meta name="turbo-refresh-scroll" content="{{ config('platform.turbo.refresh-scroll', 'reset') }}">
+    <meta name="turbo-prefetch" content="{{ var_export(config('platform.turbo.prefetch', true)) }}">
     <meta name="dashboard-prefix" content="{{  Dashboard::prefix() }}">
 
     @if(!config('platform.turbo.cache', false))
@@ -56,7 +57,7 @@
     <div class="row justify-content-center d-md-flex h-100">
         @yield('aside')
 
-        <div class="col-xxl col-xl-9 col-12">
+        <div class="col-xxl col-xl-9 col-12 mx-auto">
             @yield('body')
         </div>
     </div>

@@ -5,6 +5,350 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 14.44.1 - 2024-11-26
+
+### Fixed
+- Required `composer/semver`
+
+## 14.44.0 - 2024-11-23
+
+### Changed
+- Remove default limits for 'Attach' field file size and quantity
+- Use `whereLike` for case-insensitive search [#2924](https://github.com/orchidsoftware/platform/pull/2924)
+- Allow mutation elocument model on `getContent` [#2923](https://github.com/orchidsoftware/platform/issues/2923)
+- Refactored to modern PHP standards
+
+### Fixed
+- Loading `csrf` token for `axios` after login
+
+## 14.43.1 - 2024-11-09
+
+### Changed
+- Improve performance for simple model attribute [#2921](https://github.com/orchidsoftware/platform/pull/2921)
+
+## 14.43.0 - 2024-11-06
+
+### Added
+- Additional configuration parameters for Hotwire by default
+
+### Changed
+- The loading of modal windows in the browser has been redesigned. Now, upon invalidation, modal windows, including deferred ones, will automatically open.
+- Installed Psalm to run exclusively on GitHub Actions.
+- Set types to `static` in `Field`.
+
+### Fixed
+- Incorrect listeners names
+
+### Removed
+- Unused option when running PHPUnit
+
+## 14.42.0 - 2024-11-01
+
+### Changed
+- Restrict excessively long URLs in modal windows [#2917](https://github.com/orchidsoftware/platform/issues/2917)
+
+## 14.41.0 - 2024-10-29
+
+### Added
+- Template for grid columns on `Group` [#2913](https://github.com/orchidsoftware/platform/pull/2913)
+
+## 14.40.0 - 2024-10-28
+
+### Changed
+- Max and min width for sidebar 
+
+## 14.39.0 - 2024-10-24
+
+### Changed
+- Color favicon to monochrome
+- Improve install examples
+- Added `text-balance` for "Welcome Page"
+- Width for login form (large breakpoint)
+- Increment root font-size
+- Improve color on active item menu
+
+## 14.38.0 - 2024-10-23
+
+### Added
+- `addClass()` method to `Field` class for easier class manipulation [#2909](https://github.com/orchidsoftware/platform/pull/2909)
+
+### Changed
+- Padding for items `Selection`
+- Remove `memory_limit` for check max size upload [#2910](https://github.com/orchidsoftware/platform/issues/2910)
+
+## 14.37.0 - 2024-10-12
+
+### Added
+- Default balanced text style for `TD`
+- Property for word wrapping in table cells
+
+### Removed
+- Unused attributes on SimpleMDE
+
+### Fixed
+- Incorrect parsing of `HTML` in `SimpleMDE` field
+
+## 14.36.2 - 2024-10-11
+
+### Fixed
+- Incorrect parsing of `HTML` in `SimpleMDE` field
+
+## 14.36.1 - 2024-10-11
+
+### Fixed
+- Incorrect parsing of `HTML` in `SimpleMDE` field
+
+## 14.36.0 - 2024-09-27
+
+### Added
+- Secondary parameters for testing `Screen`
+- Missing group attribute for `Attach` field
+- Methods for define resources on packages
+- Autofill values on filters [#2895](https://github.com/orchidsoftware/platform/pull/2895)
+- Description for dont usage vendor user model
+
+### Changed
+- Changed stubs to usage `Attach` field
+- PHPStan issue when the return type of `Field::value` is `self` [#2898](https://github.com/orchidsoftware/platform/pull/2898)
+
+### Deprecated
+- `ComplexFieldConcern` interface and `isComplexFieldType` method in `TD` class
+
+### Fixed
+- Overlapping of part of the content in drop-down displayed list of fields in table
+- 12-hour format to 24-hour format of an hour with leading zeros [#2896](https://github.com/orchidsoftware/platform/pull/2896)
+
+## 14.35.1 - 2024-09-10
+
+### Fixed
+- Removed extra spans affecting indents
+
+## 14.34.0 - 2024-09-04
+
+### Changed
+- Adding state to the form when Turbo is disabled
+
+## 14.33.1 - 2024-09-04
+
+### Fixed
+- Attempt to attach a missing state on the page [#2892](https://github.com/orchidsoftware/platform/issues/2892)
+
+## 14.33.0 - 2024-09-02
+
+### Changed
+- Retrieve Screen inherited public properties from parent classes [#2880](https://github.com/orchidsoftware/platform/pull/2880)
+
+### Fixed
+- Broken assets
+
+## 14.32.0 - 2024-09-02
+
+### Added
+- New method `deferred` on `Modal` layout
+
+### Fixed
+- Preserve Relation field query order [#2668](https://github.com/orchidsoftware/platform/issues/2668)
+
+### Removed
+- Manual CSRF token handling on Turbo [#2889](https://github.com/orchidsoftware/platform/pull/2889)
+
+## 14.31.2 - 2024-08-30
+
+### Deprecated
+- `attachment` method for Eloquent models. Usage plural `attachments` instead.
+
+## 14.31.1 - 2024-08-30
+
+### Fixed
+- Disabled drag&drop input for `Attach` field [#2867](https://github.com/orchidsoftware/platform/issues/2867)
+- Missing state passing in the `listeners`
+
+## 14.31.0 - 2024-08-27
+
+### Added
+- Allow "aria-*" attributes in Fields [#2884](https://github.com/orchidsoftware/platform/pull/2884)
+
+### Fixed
+- Screen constructor property initialization during deserialization [#2885](https://github.com/orchidsoftware/platform/pull/2885)
+
+## 14.30.2 - 2024-08-23
+
+### Fixed
+- Dropdown menu in the table
+
+## 14.30.1 - 2024-08-22
+
+### Fixed
+- Safari stretched links in the table 
+- Dropdown menu in the table
+
+## 14.30.0 - 2024-08-21
+
+### Added
+- Separate trait for load models on database when restore state
+
+### Fixed
+- Safari doesn't support `position: relative` on `<tr`>` elements
+
+## 14.29.0 - 2024-08-18
+
+### Changed
+- Reduce Data Transfer for State Restore [#2872](https://github.com/orchidsoftware/platform/pull/2872)
+
+### Fixed
+- Public property stop filled when find `false` value
+
+## 14.28.2 - 2024-08-18
+
+### Fixed
+- SimpleMDE Field Incorrectly Marked as Empty When Using `required` Attribute [#2877](https://github.com/orchidsoftware/platform/issues/2877)
+
+## 14.28.1 - 2024-08-13
+
+### Fixed
+- Icon clipping issue at various ratios [#2846](https://github.com/orchidsoftware/platform/issues/2846)
+- Nested menu collapsing behavior [#2875](https://github.com/orchidsoftware/platform/issues/2875)
+
+## 14.28.0 - 2024-08-13
+
+### Added
+- Integrated `altInput` and `altFormat` attributes as recommended by the `flatpickr` package to enhance formatting capabilities. [#2873](https://github.com/orchidsoftware/platform/pull/2873)
+
+### Changed
+- Refactored protected method names and updated descriptions in `Field` class
+- Disabled `single_trait_insert_per_statement` option for `Pint`
+
+### Fixed
+- Drop-down behavior that caused it to either disappear or break the `Table` layout
+- The `maximumSelectionLength` option was not functioning correctly. The issue was resolved by adding the necessary parentheses. [#2873](https://github.com/orchidsoftware/platform/pull/2873)
+- Button text visibility issue when a loading spinner is active
+
+### Removed
+- Unused translation of the term from the project
+
+## 14.27.2 - 2024-07-30
+
+### Fixed
+- Revert `csrf` token on modal window
+
+## 14.27.1 - 2024-07-23
+
+### Fixed
+- Overflow drop-down on table
+
+## 14.27.0 - 2024-07-23
+
+### Added
+- `path` and `storage` attributes for the `Attach` field
+- Extended method for `Action`
+
+### Changed
+- Modal window no longer requires data definition before loading
+
+## 14.26.1 - 2024-06-30
+
+### Changed
+- Enhanced `zh_TW` language support [#2844](https://github.com/orchidsoftware/platform/pull/2844)
+
+### Fixed
+- Missing prefix for notification icon [#2848](https://github.com/orchidsoftware/platform/issues/2848)
+
+## 14.26.0 - 2024-06-14
+
+### Added
+- Support for XL size modal [#2842](https://github.com/orchidsoftware/platform/pull/2842)
+
+### Fixed
+- Adjusted `$type` modal positioning on the page [#2842](https://github.com/orchidsoftware/platform/pull/2842)
+
+## 14.25.3 - 2024-06-06
+
+### Fixed
+- Missing attributes for `Attach` field
+
+## 14.25.2 - 2024-06-01
+
+### Fixed
+- Updated rules for stubs to ensure correct behavior
+- Enhanced fieldset template for better usability
+- Visual enhancements to the Boolean component [#2838](https://github.com/orchidsoftware/platform/pull/2838)
+
+## 14.25.1 - 2024-05-30
+
+### Fixed
+- Incorrect merge state and data for async modals [#2658](https://github.com/orchidsoftware/platform/issues/2658)
+
+## 14.25.0 - 2024-05-30
+
+### Added
+- Improved `ModalToggle` declaration second argument for `modal` method
+
+### Fixed
+- Missed state when update async modals [#2658](https://github.com/orchidsoftware/platform/issues/2658)
+
+## 14.24.0 - 2024-05-27
+
+### Added
+- Add frontend controller in screen. [#2835](https://github.com/orchidsoftware/platform/pull/2835)
+
+### Changed
+- Remove subtitle Orchid on header
+- `Attach` field allow to set custom url endpoint for upload and sort
+
+### Removed
+- EventServiceProvider [#2834](https://github.com/orchidsoftware/platform/pull/2834)
+
+## 14.23.1 - 2024-05-04
+
+### Fixed
+- Allow events AutoDiscovery in Laravel 11 [#2829](https://github.com/orchidsoftware/platform/pull/2829) [#2828](https://github.com/orchidsoftware/platform/issues/2828)
+
+## 14.23.0 - 2024-04-23
+
+### Added
+- Possibility to change 'Add row' label for matrix field [#2824](https://github.com/orchidsoftware/platform/pull/2824)
+- Config for `Prefetching Links on Hover`
+
+## 14.22.1 - 2024-04-20
+
+### Fixed
+- Custom path to composer vendor directory
+
+## 14.22.0 - 2024-04-14
+
+### Added
+- `Text` component for `Cell`
+
+### Changed
+- Popover trigger to hover/active
+- Improved component rendering method with backward compatibility
+
+### Fixed
+- Trim profile name/description
+
+## 14.21.1 - 2024-03-25
+
+### Fixed
+- Zero value filtering in parameters for `Button` [#2818](https://github.com/orchidsoftware/platform/issues/2818)
+- Clear input after select item in relation or select fields [#2815](https://github.com/orchidsoftware/platform/pull/2815) [#2797](https://github.com/orchidsoftware/platform/pull/2797)
+
+## 14.21.0 - 2024-03-19
+
+### Added
+- Support Laravel 11.x
+
+## 14.20.0 - 2024-03-19
+
+### Added
+- New `range`, `multiple` and `withQuickDates` methods for `DateTimer` field
+
+### Changed 
+- Improve multi lines horizon forms
+- Improve example fields
+
+### Fixed
+- Overflow `select` when usage matrix field
+
 ## 14.19.0 - 2024-02-26
 
 ### Changed

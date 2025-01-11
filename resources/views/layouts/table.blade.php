@@ -1,14 +1,14 @@
 @empty(!$title)
     <fieldset>
             <div class="col p-0 px-3">
-                <legend class="text-black text-black mt-2 mx-2">
+                <legend class="text-body-emphasis mt-2 mx-2">
                     {{ $title }}
                 </legend>
             </div>
     </fieldset>
 @endempty
 
-<div class="bg-white rounded shadow-sm mb-3"
+<div class="bg-white rounded shadow-sm mb-3 overflow-hidden"
      data-controller="table"
      data-table-slug="{{$slug}}"
 >

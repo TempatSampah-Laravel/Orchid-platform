@@ -46,6 +46,10 @@
             "on_multiline": "ignore"
         },
         "trim_array_spaces": true,
-        "single_trait_insert_per_statement": false
+        "single_trait_insert_per_statement": false,
+        "new_with_parentheses": false,
+        "php_unit_method_casing": {
+            "case": "camel_case"
+        }
     }
 }

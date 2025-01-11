@@ -1,7 +1,7 @@
 <fieldset class="row g-0 mb-3">
     @if(!empty($title) || !empty($description))
     <div class="col p-0 px-3">
-        <legend class="text-black px-2 mt-2">
+        <legend class="text-body-emphasis px-2 mt-2">
             {{ __($title ?? '') }}
 
             @if(!empty($description))
@@ -23,9 +23,9 @@
         </div>
 
         @empty(!$commandBar)
-            <div class="bg-light px-4 py-3 d-flex justify-content-end rounded-bottom">
+            <div class="bg-light px-4 py-3 d-flex justify-content-end rounded-bottom gap-2">
                 @foreach($commandBar as $command)
-                    <div class="{{ !$loop->first ? 'ms-2' : ''}}">
+                    <div>
                         {!! $command !!}
                     </div>
                 @endforeach

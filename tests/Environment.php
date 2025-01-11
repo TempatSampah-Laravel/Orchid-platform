@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Orchid\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Orchestra\Testbench\Concerns\WithLaravelMigrations;
 use Orchid\Platform\Database\Seeders\OrchidDatabaseSeeder;
 use Orchid\Platform\Models\User;
 use Orchid\Platform\Providers\FoundationServiceProvider;
@@ -20,6 +21,8 @@ use Watson\Active\Active;
  */
 trait Environment
 {
+    use WithLaravelMigrations;
+
     /**
      * Setup the test environment.
      * Run test: php vendor/bin/phpunit --coverage-html ./logs/coverage ./tests
@@ -63,19 +66,7 @@ trait Environment
      */
     protected function getEnvironmentSetUp($app): void
     {
-        $config = config();
-
-        $config->set('app.debug', true);
-        $config->set('auth.providers.users.model', User::class);
-
-        // set up database configuration
-        $config->set('database.connections.orchid', [
-            'driver'   => 'sqlite',
-            'database' => ':memory:',
-            'prefix'   => '',
-        ]);
-        $config->set('scout.driver', 'collection');
-        $config->set('database.default', 'orchid');
+        config()->set('auth.providers.users.model', User::class);
     }
 
     /**

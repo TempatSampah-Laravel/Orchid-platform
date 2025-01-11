@@ -33,20 +33,20 @@ class LoginTest extends TestBrowserCase
                 ->waitForLocation('/dashboard/main')
                 ->waitForText('Get Started');
 
-            //Redirect to home
+            // Redirect to home
             $browser
                 ->visitRoute('platform.login')
-                ->waitForLocation('/home');
+                ->waitForLocation('/');
 
-            //Logout
+            // Logout
             $browser
                 ->visitRoute('platform.profile')
                 ->clickLink($user->name)
-                ->waitForText('Sign out', 5)
+                ->waitForText('Sign out')
                 ->press('Sign out')
-                ->waitForText('404', 5);
+                ->waitForText('404');
 
-            //Redirect to login
+            // Redirect to login
             $browser
                 ->visitRoute('platform.main')
                 ->waitForLocation('/dashboard/login')
